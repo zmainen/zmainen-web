@@ -181,6 +181,16 @@ footer {
 }
 #theme-toggle:hover { border-color: var(--accent); }
 
+.edit-link {
+  margin-top: 48px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  opacity: 0.3;
+}
+.edit-link:hover {
+  opacity: 0.8;
+}
+
 @media (max-width: 540px) {
   .wrap { padding: 0 20px; }
   header h1 { font-size: 28px; }
