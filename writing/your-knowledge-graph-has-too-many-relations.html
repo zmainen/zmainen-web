@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Knowledge Graph Has Too Many Relations — Zach Mainen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button id="theme-toggle" aria-label="Toggle dark mode"><span id="toggle-icon">&#9790;</span></button>
+<div class="wrap">
+<nav><a href="/writing/">&larr; Selected Writing</a></nav>
+<header>
+<h1>Your Knowledge Graph Has Too Many Relations</h1>
+<p class="meta">March 2026</p>
+</header>
+<article>
+
+      <p>Every ontology project starts the same way. You need to represent that a paper has an author, a protein participates in a pathway, a student is enrolled in a course. So you create relations: <code>authored-by</code>, <code>participates-in</code>, <code>enrolled-in</code>. Then you need <code>part-of</code>, <code>depends-on</code>, <code>realizes</code>, <code>member-of</code>, <code>located-in</code>. Each gets its own axioms, its own transitivity rules, its own inverse specification. BFO, the most widely used upper ontology in biomedical informatics, has six primitive relations. DOLCE has another six. By the time you are modeling anything real, you have dozens of relation types, each requiring its own interpretation logic, its own query patterns, its own index structures. Your schema is doing more work than your data.</p>
+
+      <p>The standard defense is that this complexity is inherent. The world has many kinds of relations, so the ontology must have many kinds of relations. This sounds reasonable. It is wrong.</p>
+
+      <h2>One relation, one field</h2>
+
+      <p>Here is the alternative. You have one primitive relation: <em>belongs-to</em>. Every assertion takes the form &ldquo;A belongs-to B.&rdquo; The relation is directed: A is the dependent, B is the context. A file belongs to a paper. A participant belongs to a situation. A chapter belongs to a book.</p>
+
+      <p>This is obviously too weak by itself. &ldquo;The student belongs to the examination&rdquo; doesn&rsquo;t tell you whether the student is taking the exam, proctoring it, or writing it. So you add a single field: the <em>quality</em>. The quality answers: in what way does A belong to B? The student belongs to the examination as <em>participant</em>. The exam paper belongs to the examination as <em>material</em>. The invigilator belongs to the examination as <em>authority</em>. The room belongs to it as <em>venue</em>. Five edges, one relation type, five different qualities.</p>
+
+      <p>So far this might look like a relabeling trick&nbsp;&mdash; you&rsquo;ve moved the complexity from the relation type into a field. The trick is what happens next.</p>
+
+      <h2>Qualities are entities</h2>
+
+      <p>The quality &ldquo;author&rdquo; is not a label drawn from a flat vocabulary. It is an entity in the same ontology. As an entity, it can itself belong to other entities. &ldquo;Author&rdquo; belongs to &ldquo;creation&rdquo; with quality &ldquo;instance&rdquo;&nbsp;&mdash; it is a specific case of the creation family. &ldquo;Sender&rdquo; belongs to &ldquo;receiver&rdquo; with quality &ldquo;inverse&rdquo;&nbsp;&mdash; they are two sides of the same edge. &ldquo;Principal-investigator&rdquo; belongs to &ldquo;member&rdquo; with quality &ldquo;implies&rdquo;&nbsp;&mdash; being a PI entails being a member.</p>
+
+      <p>This is the reflexive closure: the system that describes the world also describes its own descriptive apparatus. And it terminates. When you ask &ldquo;what is the quality of the quality?&rdquo;, you land on one of five meta-qualities&nbsp;&mdash; <em>instance</em>, <em>inverse</em>, <em>implies</em>, <em>transitive</em>, <em>applies-to</em>&nbsp;&mdash; and those meta-qualities do not require further qualification. Their meaning is given by their structural role. The recursion bottoms out at depth one. This is not a stipulation to avoid infinite regress; it is a provable property of the system. In our Lean 4 formalization, <code>closure_terminates</code> shows that every qualification chain has depth at most one, and <code>wellFounded_qualification</code> proves the ordering is well-founded.</p>
+
+      <p>Five meta-qualities are a grammar. Everything else is vocabulary. You never need to extend the grammar to model a new domain&nbsp;&mdash; you just add vocabulary, and the grammar tells you how it behaves.</p>
+
+      <h2>The sharpest move</h2>
+
+      <p>Consider a large language model in a writing session. What <em>is</em> it? In BFO terms you would need to pick a category&nbsp;&mdash; is it an agent, a tool, a process, a disposition? The answer seems to be all of the above, which means the category system is failing.</p>
+
+      <p>In the belongs-to ontology, the question dissolves. The LLM belongs to the writing session as <em>actor</em> (it transforms the prompt into a completion). It belongs to the same session as <em>method</em> (it is the repeatable procedure the writer invokes). It belongs to the infrastructure that runs it as <em>material</em> (the infrastructure processes it, allocates memory, schedules compute). Three belongings, three qualities, one entity, no contradiction. &ldquo;Actor,&rdquo; &ldquo;method,&rdquo; and &ldquo;material&rdquo; are not types of entities&nbsp;&mdash; they are qualities of <em>belongings</em>. Nothing <em>is</em> an actor in absolute terms. Things <em>participate as</em> actors in specific situations.</p>
+
+      <p>This is why institutions can govern situations (quality: domain) and also intervene in them (quality: actor) without requiring a special ontological category called &ldquo;institution.&rdquo; Two belongings, two qualities. The multi-axis problem that plagues every upper ontology simply does not arise.</p>
+
+      <h2>What the proofs say</h2>
+
+      <p>The Lean 4 formalization verifies three things. First, termination: the reflexive closure bottoms out, so the ontology is not caught in infinite self-description. Second, monotonic consistency: adding new belongings never invalidates existing ones, so the knowledge base grows without breaking. Third, expressiveness: twelve primitive relations from BFO and DOLCE&nbsp;&mdash; <code>continuant-part-of</code>, <code>has-participant</code>, <code>realizes</code>, <code>instance-of</code>, <code>inheres-in</code>, <code>occurs-in</code>, <code>part</code>, <code>constitution</code>, <code>participation</code>, <code>quality-inherence</code>, <code>quale</code>, <code>dependence</code>&nbsp;&mdash; each reduce to a single belongs-to triple with an appropriate quality. Twelve relation types become one. The reductions use distinct qualities (proven: <code>bfo_qualities_distinct</code>, <code>dolce_qualities_distinct</code>), and every meta-quality behavior referenced is valid against the closed meta-quality set.</p>
+
+      <p>The knowledge graph consequence is immediate: one table, one index structure, one query pattern. Instead of a schema that grows with every new relation type&nbsp;&mdash; each requiring migration, new indexes, new query logic&nbsp;&mdash; you have a schema that never changes. New domains add rows, not columns.</p>
+
+      <h2>The depth that isn&rsquo;t there</h2>
+
+      <p>There is a philosophical punchline. Graham Harman&rsquo;s object-oriented ontology argues that objects always withdraw from encounters&nbsp;&mdash; that there is a hidden essence behind every appearance, a real object that no interaction fully reveals. The relational account says: what looks like metaphysical depth is relational breadth. An entity has more belongings-with-qualities than any single situation activates. The LLM that seems to &ldquo;know more than it says&rdquo; is not hiding an essence. It is an entity whose quality graph is too large for any one situation to traverse. No hidden natures, no inaccessible cores. Just a graph bigger than the view.</p>
+
+      <hr class="divider">
+
+      <p class="endnote">The paper &ldquo;Belongs-To and Nothing Else: A Mechanically Verified Single-Primitive Relational Ontology&rdquo; and its Lean 4 proofs are available at <a href="https://github.com/zmainen/belongs-to-ontology">github.com/zmainen/belongs-to-ontology</a>. The formalization comprises five modules: <code>Basic</code> (core types), <code>MetaQualities</code> (derivation rules), <code>Closure</code> (termination and well-foundedness), <code>Expressiveness</code> (BFO/DOLCE reductions), and <code>Derived</code> (inference over the quality graph).</p>
+
+<p class="edit-link"><a href="https://github.com/zmainen/zmainen-web/edit/main/writing/your-knowledge-graph-has-too-many-relations.html">edit</a></p>
+</article>
+</div>
+<script>
+const btn=document.getElementById('theme-toggle'),icon=document.getElementById('toggle-icon');function applyTheme(d){document.documentElement.setAttribute('data-theme',d?'dark':'light');icon.innerHTML=d?'&#9788;':'&#9790;';localStorage.setItem('zm-theme',d?'dark':'light')}if(localStorage.getItem('zm-theme')==='dark')applyTheme(true);btn.addEventListener('click',()=>{applyTheme(document.documentElement.getAttribute('data-theme')!=='dark')});
+</script>
+</body>
+</html>
