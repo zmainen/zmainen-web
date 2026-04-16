@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><!-- TITLE --> — Zach Mainen</title>
+<meta name="description" content="<!-- DESCRIPTION -->">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* === Reset === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* === Palette === */
+:root {
+  --bg: #FAFAF8;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --accent: #2a5a5a;
+  --border: #e8e8e4;
+  --card-bg: #ffffff;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+[data-theme="dark"] {
+  --bg: #131313;
+  --text: #e8e6e2;
+  --muted: #999;
+  --accent: #6aaeae;
+  --border: #2a2a2a;
+  --card-bg: #1a1a1a;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* === Base === */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.8;
+  transition: background 0.3s, color 0.3s;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* === Typography === */
+h1 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(28px, 5vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+h2 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(20px, 3vw, 24px);
+  letter-spacing: -0.01em;
+  margin: 40px 0 16px;
+}
+h3 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(18px, 2.5vw, 20px);
+  margin: 32px 0 12px;
+}
+p { margin-bottom: 16px; }
+.subtitle {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-top: 4px;
+}
+.meta {
+  font-size: 14px;
+  color: var(--muted);
+}
+.highlight {
+  display: block;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--accent);
+  margin: 32px 0;
+}
+
+/* === Nav === */
+nav {
+  padding: 40px 0 0;
+  font-size: 14px;
+  font-weight: 400;
+}
+.back-link { color: var(--accent); }
+.back-link:hover { text-decoration: underline; }
+
+/* === Layout === */
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+}
+article { padding: 40px 0 60px; }
+section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+section:last-of-type { border-bottom: none; }
+
+/* === Cards === */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.card {
+  display: block;
+  padding: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-decoration: none;
+}
+.card-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.card-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* === Lists === */
+article ol, article ul {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+article li { margin-bottom: 8px; }
+article em { font-style: italic; }
+article strong { font-weight: 500; }
+
+/* === Callout === */
+.callout {
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--card-bg);
+  border-radius: 0 8px 8px 0;
+  font-size: 15px;
+}
+
+/* === Divider === */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* === Endnote === */
+.endnote {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* === Theme toggle === */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: border-color 0.3s, background 0.3s;
+}
+#theme-toggle:hover { border-color: var(--accent); }
+
+/* === Footer === */
+footer {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* === Edit link === */
+.edit-link {
+  margin-top: 48px;
+  font-size: 12px;
+  opacity: 0.3;
+}
+.edit-link:hover { opacity: 0.8; }
+
+/* === Responsive === */
+@media (max-width: 540px) {
+  .wrap { padding: 0 20px; }
+  h1 { font-size: 28px; }
+  header { padding: 32px 0 28px; }
+}
+</style>
+</head>
+<body>
+
+<button id="theme-toggle" aria-label="Toggle dark mode"><span id="toggle-icon">&#9790;</span></button>
+
+<div class="wrap">
+
+<nav><a class="back-link" href="/">&larr; <!-- NAV --></a></nav>
+
+<header>
+  <h1><!-- HEADING --></h1>
+  <p class="subtitle"><!-- SUBTITLE --></p>
+  <p class="meta"><!-- META --></p>
+</header>
+
+<!-- CONTENT -->
+
+</div>
+
+<footer>&copy; 2026 Zachary F. Mainen</footer>
+
+<script>
+const btn=document.getElementById('theme-toggle'),icon=document.getElementById('toggle-icon');
+function applyTheme(d){document.documentElement.setAttribute('data-theme',d?'dark':'light');icon.innerHTML=d?'&#9788;':'&#9790;';localStorage.setItem('zm-theme',d?'dark':'light')}
+if(localStorage.getItem('zm-theme')==='dark')applyTheme(true);
+btn.addEventListener('click',()=>{applyTheme(document.documentElement.getAttribute('data-theme')!=='dark')});
+</script>
+</body>
+</html>
