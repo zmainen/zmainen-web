@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photos — Zach Mainen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAFAF8; --text: #1a1a1a; --muted: #6b6b6b; --accent: #2a5a5a;
+  --border: #e8e8e4; --card-bg: #ffffff;
+}
+[data-theme="dark"] {
+  --bg: #131313; --text: #e8e6e2; --muted: #999; --accent: #6aaeae;
+  --border: #2a2a2a; --card-bg: #1a1a1a;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-weight: 400; font-size: 16px; line-height: 1.7;
+  transition: background 0.3s, color 0.3s;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 28px; }
+nav { padding: 40px 0 0; font-size: 14px; }
+.back-link { color: var(--accent); }
+header { padding: 48px 0 40px; border-bottom: 1px solid var(--border); }
+header h1 {
+  font-family: 'Instrument Serif', serif; font-weight: 400;
+  font-size: 28px; letter-spacing: -0.01em;
+}
+header p { font-size: 14px; color: var(--muted); font-weight: 300; margin-top: 4px; }
+.gallery { padding: 40px 0 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.gallery img {
+  width: 100%; border-radius: 6px; border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+.gallery img:hover { border-color: var(--accent); }
+.gallery .wide { grid-column: 1 / -1; max-width: 480px; margin: 0 auto; }
+.note { font-size: 13px; color: var(--muted); font-weight: 300; text-align: center; padding-bottom: 40px; }
+#theme-toggle {
+  position: fixed; top: 20px; right: 20px; z-index: 100;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--card-bg);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: border-color 0.3s, background 0.3s;
+}
+#theme-toggle:hover { border-color: var(--accent); }
+footer { padding: 32px 0; text-align: center; font-size: 13px; color: var(--muted); font-weight: 300; }
+@media (max-width: 540px) {
+  .wrap { padding: 0 20px; }
+  .gallery { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<button id="theme-toggle" aria-label="Toggle dark mode"><span id="toggle-icon">&#9790;</span></button>
+<div class="wrap">
+<nav><a class="back-link" href="/">&larr; Zach Mainen</a></nav>
+<header>
+  <h1>Photos</h1>
+  <p>Available for press and academic use. Photo: Alexandre Azinheira, April 2026.</p>
+</header>
+<div class="gallery">
+  <img src="/images/headshot.jpg" alt="Zach Mainen — headshot">
+  <img src="/images/portrait-full.jpg" alt="Zach Mainen — portrait">
+</div>
+<p class="note">High-resolution originals available on request.</p>
+</div>
+<footer>&copy; 2026 Zachary F. Mainen</footer>
+<script>
+const btn=document.getElementById('theme-toggle'),icon=document.getElementById('toggle-icon');
+function applyTheme(d){document.documentElement.setAttribute('data-theme',d?'dark':'light');icon.innerHTML=d?'&#9788;':'&#9790;';localStorage.setItem('zm-theme',d?'dark':'light')}
+if(localStorage.getItem('zm-theme')==='dark')applyTheme(true);
+btn.addEventListener('click',()=>{applyTheme(document.documentElement.getAttribute('data-theme')!=='dark')});
+</script>
+</body>
+</html>

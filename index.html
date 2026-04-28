@@ -76,6 +76,40 @@ header {
   font-weight: 300;
 }
 
+.bottom-links {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.bottom-links a { font-weight: 400; }
+
+.bottom-links .sep { margin: 0 8px; }
+
+.social-links {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.social-links a {
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.social-links a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.social-links svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
 #theme-toggle {
   position: fixed;
   top: 20px;
@@ -207,6 +241,36 @@ footer {
   font-weight: 300;
 }
 
+.collab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  justify-content: center;
+  list-style: none;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.collab-list a {
+  font-weight: 400;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.collab-list a:hover { color: var(--accent); }
+
+.inst-icon {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
 @media (max-width: 540px) {
   header { padding: 48px 0 40px; }
   .header-row { flex-direction: column; text-align: center; gap: 16px; }
@@ -223,7 +287,7 @@ footer {
 
 <header>
   <div class="header-row">
-<div class="header-text">
+    <div class="header-text">
       <h1>Zach Mainen</h1>
       <p class="subtitle">Lisbon, Portugal</p>
     </div>
@@ -232,17 +296,27 @@ footer {
 
 <!-- BIO -->
 <section>
-  <p class="bio">I am a Principal Investigator at the <a href="https://fchampalimaud.org">Champalimaud Centre for the Unknown</a> in Lisbon, where I run the <a href="https://fchampalimaud.org/research/groups/mainen">Systems Neuroscience Lab</a> studying serotonin, decision-making, and perception. I co-founded the <a href="https://www.internationalbrainlab.com">International Brain Laboratory</a>, a collaboration rethinking how neuroscience is done. I also write on artificial intelligence, formal ontology, and the design of institutions, and founded <a href="https://latentstates.org">Latent States</a>, a research programme exploring subjective experience through science and art.</p>
+  <p class="bio">I am a Principal Investigator at the <a href="https://fchampalimaud.org">Champalimaud Centre for the Unknown</a> in Lisbon, where I run the <a href="https://mainenlab.org">Mainen Lab</a> studying serotonin, decision-making, and perception. I co-founded the <a href="https://www.internationalbrainlab.com">International Brain Laboratory</a>, a collaboration rethinking how neuroscience is done. I also write on artificial intelligence, formal ontology, and the design of institutions, and founded <a href="https://latentstates.org">Latent States</a>, a research programme exploring subjective experience through science and art.</p>
 </section>
 
 <!-- RESEARCH -->
 <section>
   <h2>Research</h2>
   <div class="cards">
-    <a class="card" href="https://fchampalimaud.org/research/groups/mainen">
-      <div class="card-title">The Systems Neuroscience Lab</div>
-      <div class="card-url">fchampalimaud.org</div>
+    <a class="card" href="https://mainenlab.org">
+      <div class="card-title">Mainen Lab</div>
+      <div class="card-url">mainenlab.org</div>
       <div class="card-desc">Systems neuroscience of serotonin, decision-making, and rapid perception. Neural circuits underlying confidence, uncertainty, and flexible behavior in mice and humans.</div>
+    </a>
+    <a class="card" href="https://doi.org/10.48550/arXiv.2603.21272">
+      <div class="card-title">Inscription</div>
+      <div class="card-url">arXiv:2603.21272</div>
+      <div class="card-desc">A multi-paper research program on how the organization of external memory determines reasoning capacity. Spans computational complexity, formal ontology, multi-agent systems, and AI governance.</div>
+    </a>
+    <a class="card" href="https://topological.eu">
+      <div class="card-title">Topological Theory of Things</div>
+      <div class="card-url">topological.eu</div>
+      <div class="card-desc">A relational, pluralistic ontology — from phenomenology to data structures. Flat, formally precise, and now applied to designing ontologies for general world models.</div>
     </a>
     <a class="card" href="https://latentstates.org">
       <div class="card-title">Latent States</div>
@@ -294,7 +368,7 @@ footer {
     <li>
       <span class="pub-title">The Library Theorem: how external organization governs agentic reasoning capacity.</span>
       Mainen ZF.
-      <span class="pub-journal">arXiv preprint</span> <span class="pub-year">(2026)</span> <a href="https://doi.org/10.48550/arXiv.2603.21272">arXiv:2603.21272</a>
+      <span class="pub-journal">arXiv preprint — draft</span> <span class="pub-year">(2026)</span> <a href="https://doi.org/10.48550/arXiv.2603.21272">arXiv:2603.21272</a>
     </li>
     <li>
       <span class="pub-title">Facial expressions in mice reveal latent cognitive variables and their neural correlates.</span>
@@ -319,12 +393,35 @@ footer {
   </ul>
 </section>
 
+<!-- AFFILIATIONS -->
+<section style="text-align: center; padding: 32px 0;">
+  <ul class="collab-list">
+    <li><a href="https://fchampalimaud.org"><svg class="inst-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7v2h20V7L12 2zM4 11v7h3v-7H4zm5 0v7h3v-7H9zm5 0v7h3v-7h-3zm5 0v7h3v-7h-3zM2 20v2h20v-2H2z"/></svg>Champalimaud Foundation</a></li>
+    <li><a href="https://www.internationalbrainlab.com"><svg class="inst-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.5"/></svg>International Brain Laboratory</a></li>
+  </ul>
+</section>
+
 <!-- CONTACT -->
 <section style="text-align: center;">
   <h2>Contact</h2>
   <div class="contact-info">
     <p><span class="label">Email</span><br><a href="mailto:zmainen@neuro.fchampalimaud.org">zmainen@neuro.fchampalimaud.org</a></p>
     <p style="margin-top:12px"><span class="label">Address</span><br>Champalimaud Centre for the Unknown<br>Av. Bras&iacute;lia, 1400-038 Lisbon, Portugal</p>
+  </div>
+</section>
+
+<!-- CV & PHOTOS -->
+<section style="text-align: center; border-bottom: none; padding-bottom: 24px;">
+  <div class="bottom-links">
+    <a href="/docs/cv-biosketch-2026.pdf">Biosketch</a>
+    <span class="sep">&middot;</span>
+    <a href="/photos.html">Photos</a>
+  </div>
+  <div class="social-links">
+    <a href="https://scholar.google.pt/citations?user=ivDH8SoAAAAJ" aria-label="Google Scholar" title="Google Scholar"><svg viewBox="0 0 24 24"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    <a href="https://www.linkedin.com/in/zmainen/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg></a>
+    <a href="https://x.com/zmainen" aria-label="X" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="https://orcid.org/0000-0001-7913-9109" aria-label="ORCID" title="ORCID"><svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378a.815.815 0 110 1.63.815.815 0 010-1.63zM6.6 7.5h1.5v9H6.6zm3.9 0h4.05c3.6 0 5.25 2.25 5.25 4.5s-1.65 4.5-5.25 4.5H10.5zm1.5 1.35v6.3H14.55c2.85 0 3.75-1.65 3.75-3.15s-.9-3.15-3.75-3.15z"/></svg></a>
   </div>
 </section>
 
